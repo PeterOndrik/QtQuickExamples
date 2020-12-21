@@ -2,8 +2,8 @@
 
 ToDoList::ToDoList(QObject *parent) : QObject(parent)
 {
-    _items.append({ true, QStringLiteral("Wash the car")});
-    _items.append({ false, QStringLiteral("Fix the sink")});
+    _items.append({ true, QStringLiteral("Wash the car") });
+    _items.append({ false, QStringLiteral("Fix the sink") });
 }
 
 QVector<ToDoItem> ToDoList::items() const
@@ -21,6 +21,8 @@ bool ToDoList::setItemAt(int index, const ToDoItem &item)
         return false;
 
     _items[index] = item;
+
+    return true;
 }
 
 void ToDoList::appendItem()
@@ -36,14 +38,18 @@ void ToDoList::appendItem()
 
 void ToDoList::removeCompletedItems()
 {
-    for (int i = 0; i < _items.size(); ) {
-        if (_items.at(i).done) {
+    for (int i = 0; i < _items.size(); )
+    {
+        if (_items.at(i).done)
+        {
             emit preItemRemoved(i);
 
             _items.removeAt(i);
 
             emit postItemRemoved();
-        } else {
+        }
+        else
+        {
             ++i;
         }
     }

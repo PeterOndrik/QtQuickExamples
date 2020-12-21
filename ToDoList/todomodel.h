@@ -8,7 +8,7 @@ class ToDoList;
 class ToDoModel : public QAbstractListModel
 {
     Q_OBJECT
-    Q_PROPERTY(ToDoList list READ list WRITE setList)
+    Q_PROPERTY(ToDoList *list READ list WRITE setList)
 
 public:
     explicit ToDoModel(QObject *parent = nullptr);
@@ -17,6 +17,7 @@ public:
         DoneRole = Qt::UserRole,
         DescriptionRole
     };
+
     // Basic functionality:
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 

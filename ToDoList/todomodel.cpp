@@ -22,7 +22,8 @@ QVariant ToDoModel::data(const QModelIndex &index, int role) const
         return QVariant();
 
     const ToDoItem item = _list->items().at(index.row());
-    switch (role) {
+    switch (role)
+    {
     case DoneRole:
         return QVariant(item.done);
     case DescriptionRole:
@@ -38,7 +39,8 @@ bool ToDoModel::setData(const QModelIndex &index, const QVariant &value, int rol
         return false;
 
     ToDoItem item = _list->items().at(index.row());
-    switch (role) {
+    switch (role)
+    {
     case DoneRole:
         item.done = value.toBool();
         break;
@@ -46,10 +48,12 @@ bool ToDoModel::setData(const QModelIndex &index, const QVariant &value, int rol
         item.description = value.toString();
     }
 
-    if (_list->setItemAt(index.row(), item)) {
+    if (_list->setItemAt(index.row(), item))
+    {
         emit dataChanged(index, index, QVector<int>() << role);
         return true;
     }
+
     return false;
 }
 
@@ -84,7 +88,8 @@ void ToDoModel::setList(ToDoList *list)
 
     _list = list;
 
-    if (_list) {
+    if (_list)
+    {
         connect(_list, &ToDoList::preItemAppended, this, [=](){
             const int index = _list->items().size();
             beginInsertRows(QModelIndex(), index, index);
@@ -94,7 +99,7 @@ void ToDoModel::setList(ToDoList *list)
         });
 
         connect(_list, &ToDoList::preItemRemoved, this, [=](int index){
-           beginRemoveRows(QModelIndex(), index, index);
+            beginRemoveRows(QModelIndex(), index, index);
         });
         connect(_list, &ToDoList::postItemRemoved, this, [=](){
             endRemoveRows();
